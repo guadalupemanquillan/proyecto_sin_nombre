@@ -7,7 +7,7 @@ const videoSchema = new mongoose.Schema({
   titulo: {
     type: String,
   },
-  categoríaId: {
+  categoriaId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Categoria",
   },

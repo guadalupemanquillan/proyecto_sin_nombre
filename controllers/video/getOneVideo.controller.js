@@ -4,7 +4,7 @@ const {
 
 exports.getOneVideoController = async (req, res) => {
   try {
-    const result = await getOneVideoService(req);
+    const result = await getOneVideoService(req.params.id);
     if (!result) {
       return res.status(404).json({ error: "Video no encontrado" });
     }

@@ -27,7 +27,7 @@ logrosRouter.post("/", createNewLogrosController);
 logrosRouter.delete("/:id", deleteLogrosController);
 
 // GET
-logrosRouter.get("/logros", getAllLogrosController);
+logrosRouter.get("/", getAllLogrosController);
 logrosRouter.get("/:id", getOneLogrosController);
 
 // PUT

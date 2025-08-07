@@ -23,7 +23,7 @@ const {
 
 // GET
 videoRouter.get("/:id", getOneVideoController);
-videoRouter.get("/videos", getAllVideoController);
+videoRouter.get("/", getAllVideoController);
 
 // POST
 videoRouter.post("/", createNewVideoController);

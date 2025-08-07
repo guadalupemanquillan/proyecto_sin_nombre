@@ -1,23 +1,17 @@
-const Empresa = require("../../models/empresa.model");
-
 const Logros = require("../../models/logros.model");
 
 exports.createNewLogrosService = async ({ body }) => {
-  const { titulo, descripcion, fecha, empresaId } = body;
-  if (!titulo || !descripcion || !fecha || !empresaId) {
+  const { nombre, usuarioId, iconoUrl } = body;
+
+  if (!nombre || !usuarioId) {
     throw new Error("Faltan campos obligatorios");
   }
-  const empresa = await Empresa.findById(empresaId);
-  if (!empresa) {
-    throw new Error("La empresa no existe");
-  }
+
   const nuevoLogro = await Logros.create({
-    titulo,
-    descripcion,
-    fecha,
-    empresaId,
+    nombre,
+    usuarioId,
+    iconoUrl,
   });
-  return {
-    logros: nuevoLogro,
-  };
+
+  return nuevoLogro;
 };

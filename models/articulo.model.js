@@ -15,6 +15,10 @@ const articuloSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Categoria",
     },
+    fechaEdicion: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
     timestamps: true,

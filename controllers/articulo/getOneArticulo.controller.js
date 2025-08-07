@@ -1,9 +1,9 @@
-const getOneArticulo = require("../../services/articulo/getOneArticulo.service");
+const { getOneArticuloService } = require("../../services/articulo/getOneArticulo.service");
 
 exports.getOneArticuloController = async (req, res) => {
   const { id } = req.params;
   try {
-    const articulo = await articuloService.getOneArticulo(id);
+    const articulo = await getOneArticuloService(id);
     if (!articulo) {
       return res.status(404).json({ message: "Artículo no encontrado" });
     }
@@ -12,13 +12,3 @@ exports.getOneArticuloController = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-
-
-
-
-
-
-
-
-

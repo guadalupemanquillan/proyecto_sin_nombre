@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   nombreCompleto: {
-    type: Number,
+    type: String,
   },
   roles: {
     type: String,

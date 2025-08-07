@@ -27,7 +27,7 @@ tareasRouter.post("/", createNewTareasController);
 
 // GET
 tareasRouter.get("/:id", getOneTareasController);
-tareasRouter.get("/tareas", getAllTareasController);
+tareasRouter.get("/", getAllTareasController);
 
 // PUT
 tareasRouter.put("/:id", putOneTareasController);

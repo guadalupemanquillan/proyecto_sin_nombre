@@ -26,7 +26,7 @@ userRouter.post("/", createNewUserController);
 
 // GET
 userRouter.get("/:id", getOneUserController);
-userRouter.get("/users", getAllUserController);
+userRouter.get("/", getAllUserController);
 
 // PUT
 userRouter.put("/:id", putOneUserController);
