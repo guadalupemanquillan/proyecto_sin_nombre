@@ -1,6 +1,6 @@
-const {getAllEmpresaService} = require("../../services/empresa/getAllEmpresa.service");
-
-
+const {
+  getAllEmpresaService,
+} = require("../../services/empresa/getAllEmpresa.service");
 
 exports.getAllEmpresaController = async (req, res) => {
   try {

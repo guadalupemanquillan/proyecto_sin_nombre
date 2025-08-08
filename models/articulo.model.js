@@ -15,13 +15,31 @@ const articuloSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Categoria",
     },
-    fechaEdicion: {
-      type: Date,
-      default: Date.now,
+    historialEdiciones: [{
+    titulo: {
+      type: String,
     },
+    texto: {
+      type: String,
+    },
+    autor: {
+      type: String,
+    },
+    categoriaId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Categoria",
+    },
+    usuarioEdita: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    fechaEdicion: {
+      type: Date
+    }
+    }]
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 

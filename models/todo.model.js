@@ -4,9 +4,18 @@ const todoSchema = new mongoose.Schema({
   titulo: {
     type: String,
   },
-  tareaBase: {
-    type: Number,
-  },
+  tareaBase: [
+    {
+      tareaId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tareas",
+      },
+      completada: {
+        type: Boolean,
+        default: false
+      }
+    },
+  ],
   categoriaId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Categoria",

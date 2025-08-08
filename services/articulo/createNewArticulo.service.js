@@ -20,7 +20,5 @@ exports.createNewArticuloService = async (req) => {
     categoriaId,
   });
 
-  return {
-    articulo: nuevoArticulo,
-  };
+  return nuevoArticulo;
 };

@@ -8,7 +8,9 @@ exports.getOneCategoriaService = async (id) => {
     throw new Error("El ID no es válido");
   }
 
-  const categoria = await Categoria.findById(id);
+  const categoria = await Categoria.findOne({ _id: id, isDeleted: false })
+    .populate("categoriaPadre")
+    .populate("empresaId");
 
   if (!categoria) {
     throw new Error("Categoría no encontrada");
@@ -16,3 +18,5 @@ exports.getOneCategoriaService = async (id) => {
 
   return categoria;
 };
+
+//chequear no esta trayendo categoria por id 

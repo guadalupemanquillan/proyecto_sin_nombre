@@ -38,4 +38,9 @@ router.use("/video", auth, videoRouter);
 const todoRouter = require("./todo.routes");
 router.use("/todo", auth, todoRouter);
 
+// RUTA TEST
+const testRouter = require("./test.routes");
+router.use("/test", auth, testRouter);
+
+
 module.exports = router;

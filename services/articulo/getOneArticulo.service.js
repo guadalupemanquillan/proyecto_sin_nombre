@@ -1,10 +1,8 @@
 const Articulo = require("../../models/articulo.model");
 
 exports.getOneArticuloService = async (id) => {
-  try {
     const articulo = await Articulo.findById(id).populate("categoriaId");
+    if(!articulo) throw new Error("No se ha encontrado un articulo con el ID proporcionado");
+
     return articulo;
-  } catch (error) {
-    throw new Error(error.message);
-  }
 };

@@ -1,4 +1,6 @@
-const{getOneEmpresaService,}=require("../../services/empresa/getOneEmpresa.service");
+const {
+  getOneEmpresaService,
+} = require("../../services/empresa/getOneEmpresa.service");
 
 exports.getOneEmpresaController = async (req, res) => {
   try {

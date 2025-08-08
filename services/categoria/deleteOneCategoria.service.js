@@ -7,8 +7,9 @@ exports.deleteOneCategoriaService = async (req) => {
 
   const categoria = await Categoria.findById(id);
   if (!categoria) throw new Error("Categoría no encontrada");
+  
+  categoria.isDeleted = true;
+  await categoria.save()
 
-  await categoria.deleteOne(); 
-
-  return { message: "Categoría eliminada correctamente" };
+  return categoria;
 };

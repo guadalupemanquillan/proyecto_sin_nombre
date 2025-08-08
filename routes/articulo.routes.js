@@ -19,8 +19,8 @@ const {
 } = require("../controllers/articulo/getAllArticulo.controller");
 
 const {
-  deleteArticuloController,
-} = require("../controllers/articulo/deleteArticulo.controller");
+  deleteOneArticuloController,
+} = require("../controllers/articulo/deleteOneArticulo.controller");
 
 // GET
 articuloRouter.get("/:id", getOneArticuloController);
@@ -33,6 +33,6 @@ articuloRouter.post("/", createNewArticuloController);
 articuloRouter.put("/:id", putOneArticuloController);
 
 // DELETE
-articuloRouter.delete("/:id", deleteArticuloController);
+articuloRouter.delete("/:id", deleteOneArticuloController);
 
 module.exports = articuloRouter;

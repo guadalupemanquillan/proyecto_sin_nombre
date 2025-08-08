@@ -1,17 +1,20 @@
 const Logros = require("../../models/logros.model");
 
-exports.createNewLogrosService = async ({ body }) => {
-  const { nombre, usuarioId, iconoUrl } = body;
+const User = require("../../models/user.model");
 
-  if (!nombre || !usuarioId) {
-    throw new Error("Faltan campos obligatorios");
+exports.createNewLogrosService = async (userId,nombre,iconoUrl) => {
+  const user = await User.findById(userId); 
+  if (!user){
+    throw new Error("Usuario no encontrado ")
   }
-
   const nuevoLogro = await Logros.create({
     nombre,
-    usuarioId,
+    usuario:user._id,
     iconoUrl,
   });
+
+  user.logros.push(nuevoLogro._id); 
+  await user.save ()
 
   return nuevoLogro;
 };

@@ -7,13 +7,9 @@ const tareasSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    tareaId: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     completada: {
-      type: String,
+      type: Boolean,
+      default: false
     },
   },
   {
@@ -21,6 +17,6 @@ const tareasSchema = new mongoose.Schema(
   }
 );
 
-const Tareas = mongoose.models.Tareas || mongoose.model("Tareas", tareasSchema);
+const Tareas = mongoose.model("Tareas", tareasSchema);
 
 module.exports = Tareas;

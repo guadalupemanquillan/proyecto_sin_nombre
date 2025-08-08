@@ -4,8 +4,7 @@ const {
 
 exports.createNewUserController = async (req, res) => {
   try {
-    const data = req.body;
-    const newUser = await createNewUserService(data);
+    const newUser = await createNewUserService(req);
     res.status(201).json(newUser);
   } catch (error) {
     console.error(error);

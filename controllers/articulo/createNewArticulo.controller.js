@@ -2,6 +2,7 @@ const {
   createNewArticuloService,
 } = require("../../services/articulo/createNewArticulo.service");
 
+
 exports.createNewArticuloController = async (req, res) => {
   try {
     const result = await createNewArticuloService(req);

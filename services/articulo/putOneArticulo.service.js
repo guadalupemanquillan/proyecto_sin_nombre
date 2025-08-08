@@ -8,7 +8,7 @@ exports.putOneArticuloService = async (id, datosActualizados) => {
       new: true,
       runValidators: true,
     }
-  ).populate("categoriaId");
+  )
   if (!articuloActualizado) {
     throw new Error("Artículo no encontrado");
   }

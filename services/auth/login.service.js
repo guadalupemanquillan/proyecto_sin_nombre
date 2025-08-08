@@ -4,29 +4,30 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 exports.loginService = async (req, res) => {
-  if (!req.body.username && !req.body.password)
-    throw new Error("Campos requeridos no entregados.");
-
-  const jwt = require("jsonwebtoken");
-
   const { username, password } = req.body;
+
+  if (!username || !password) {
+    throw new Error("Campos requeridos no entregados.");
+  }
+
   const backupUser = process.env.BACKUP_USER;
   const backupPass = process.env.BACKUP_PASSWORD;
 
-  const usuarioDB = await User.findOne({ username });
+  const usuarioDB = await User.findOne({ nombre: username });
 
   if (usuarioDB) {
-    const result = await bcrypt.compare(password, usuarioDB.password);
-    if (result) {
-      const token = jwt.sign(
-        { userId: usuarioDB._id },
-        procces.env.SECRET_KEY,
-        { expiresIn: "12h" }//luego hay que cambiar a 1hs 
-      );
-      return { token };
-    } else {
+    const isMatch = await bcrypt.compare(password, usuarioDB.password);
+    if (!isMatch) {
       throw new Error("Contraseña es incorrecta.");
     }
+
+    const token = jwt.sign(
+      { userId: usuarioDB._id },
+      process.env.SECRET_KEY,
+      { expiresIn: "12h" } 
+    );
+
+    return { token };
   }
 
   if (username === backupUser && password === backupPass) {
@@ -34,7 +35,7 @@ exports.loginService = async (req, res) => {
       expiresIn: "12h",
     });
     return { token };
-  } else {
-    throw new Error("Credenciales incorrectas");
   }
+
+  throw new Error("Credenciales incorrectas");
 };

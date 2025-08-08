@@ -1,4 +1,6 @@
-const { putOneEmpresaService } = require("../../services/empresa/putOneEmpresa.service");
+const {
+  putOneEmpresaService,
+} = require("../../services/empresa/putOneEmpresa.service");
 
 exports.putOneEmpresaController = async (req, res) => {
   try {

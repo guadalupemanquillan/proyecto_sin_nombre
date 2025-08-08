@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const empresaSchema = new mongoose.Schema({
-
   nombre: {
     type: String,
     unique: true,

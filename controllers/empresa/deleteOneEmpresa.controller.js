@@ -3,7 +3,7 @@ const {
 } = require("../../services/empresa/deleteEmpresa.service");
 
 exports.deleteOneEmpresaController = async (req, res) => {
-  const { id } = req.params; // req = REQUEST ---- Lo request obtene el parametro Id 
+  const { id } = req.params; 
   try {
     const empresaEliminada = await deleteOneEmpresaService(id);
     return res.status(200).json({

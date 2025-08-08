@@ -10,10 +10,17 @@ const userSchema = new mongoose.Schema({
   roles: {
     type: String,
     enum: ["usuario", "editor"],
+    default: "usuario"
   },
   password: {
     type: String,
   },
+  logros: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Logros",
+      },
+    ]
 });
 
 const User = mongoose.model("User", userSchema);

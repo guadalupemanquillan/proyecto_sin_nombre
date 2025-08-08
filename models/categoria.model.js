@@ -17,6 +17,10 @@ const categoriaSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Empresa",
   },
+  isDeleted: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const Categoria = mongoose.model("Categoria", categoriaSchema);
