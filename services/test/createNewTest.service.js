@@ -12,5 +12,3 @@ exports.createNewTestService = async (data) => {
   const newTest = await Test.create(data);
   return newTest;
 };
-
-//recordar que data trae preguntas y logros 

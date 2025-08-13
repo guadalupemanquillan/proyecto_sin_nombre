@@ -1,5 +1,11 @@
 const Test = require("../../models/test.model");
 
 exports.deleteOneTestService = async (id) => {
-  return await Test.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
+  if (!id) throw new Error("Id no proporcionado");
+  const result = await Test.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    { new: true }
+  );
+  return result;
 };

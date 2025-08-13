@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
   },
+  //este arreglo de logros representa los logros que ya gano el usuario 
   logros: [
       {
         type: mongoose.Schema.Types.ObjectId,

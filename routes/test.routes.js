@@ -28,7 +28,7 @@ const {
 
 // POST
 testRouter.post("/", createNewTestController);
-testRouter.post("/",verificarTestController)
+testRouter.post("/verificarTest/:userId/:testId",verificarTestController)
 // DELETE
 testRouter.delete("/:id", deleteOneTestController);
 // GET
