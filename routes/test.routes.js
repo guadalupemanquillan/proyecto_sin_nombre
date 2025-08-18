@@ -2,9 +2,8 @@ const express = require("express");
 
 const testRouter = express.Router();
 
-const {
-  createNewTestController,
-} = require("../controllers/test/createNewTest.controller");
+const { authorizeRoles } = require("../middlewares/roles.middleware");
+const { createNewTestController } = require("../controllers/test/createNewTest.controller");
 
 const {
   deleteOneTestController,
@@ -27,14 +26,14 @@ const {
 } = require("../controllers/test/verificarTest.controller");
 
 // POST
-testRouter.post("/", createNewTestController);
+testRouter.post("/", authorizeRoles('editor'), createNewTestController);
 testRouter.post("/verificarTest/:userId/:testId",verificarTestController)
 // DELETE
-testRouter.delete("/:id", deleteOneTestController);
+testRouter.delete("/:id", authorizeRoles('editor'), deleteOneTestController);
 // GET
 testRouter.get("/", getAllTestController);
 testRouter.get("/:id", getOneTestController);
 // PUT
-testRouter.put("/:id", putOneTestController);
+testRouter.put("/:id", authorizeRoles('editor'), putOneTestController);
 
 module.exports = testRouter;

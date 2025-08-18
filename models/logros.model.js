@@ -11,6 +11,10 @@ const logrosSchema = new mongoose.Schema({
   iconoUrl: {
     type: String,
   },
+  isDeleted: {
+    type: Boolean,
+    default: false
+  }
  },
   {
     timestamps: true,

@@ -22,33 +22,21 @@ exports.loginService = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { userId: usuarioDB._id },
+      { id: usuarioDB._id, role: usuarioDB.roles },
       process.env.SECRET_KEY,
-      { expiresIn: "12h" } 
+      { expiresIn: "12h" }
     );
 
-    return { 
-      token,
-      user: {
-        id: usuarioDB._id,
-        nombre: usuarioDB.nombre,
-        email: usuarioDB.email
-      }
-    };
+    return { token };
   }
 
   if (username === backupUser && password === backupPass) {
-    const token = jwt.sign({ userId: "admin" }, process.env.SECRET_KEY, {
-      expiresIn: "12h",
-    });
-    return { 
-      token,
-      user: {
-        id: "admin",
-        nombre: "Administrador",
-        email: "admin@academia.com"
-      }
-    };
+    const token = jwt.sign(
+      { id: "admin", role: "editor" },
+      process.env.SECRET_KEY,
+      { expiresIn: "12h" }
+    );
+    return { token };
   }
 
   throw new Error("Credenciales incorrectas");

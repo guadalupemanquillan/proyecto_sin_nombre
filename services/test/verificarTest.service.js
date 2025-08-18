@@ -1,13 +1,13 @@
 const User = require("../../models/user.model");
-
+const Logros = require("../../models/logros.model");
 const Test = require("../../models/test.model");
 
 exports.verificarTestService = async ({ userId, testId, respuestas }) => {
-  const user = await User.findById(userId);
+  const user = await User.findById(userId).populate("logros");
 
   if (!user) throw new Error("Usuario no encontrado");
 
-  const test = await Test.findById(testId).populate("logros", "nombre");
+  const test = await Test.findById(testId);
   if (!test) throw new Error("Test no encontrado");
 
   const totalPreguntas = test.preguntas.length;
@@ -19,7 +19,7 @@ exports.verificarTestService = async ({ userId, testId, respuestas }) => {
   let preguntasCorrectas = 0;
   let preguntasIncorrectas = 0;
 
-  for (respuestaUsuario of respuestas) {
+  for (const respuestaUsuario of respuestas) {
     const preguntaEnTest = test.preguntas.find(
       (pregunta) => pregunta.tituloPregunta === respuestaUsuario.pregunta
     );
@@ -33,19 +33,35 @@ exports.verificarTestService = async ({ userId, testId, respuestas }) => {
     }
   }
   const aprobado = preguntasCorrectas >= necesariasParaAprobar;
-  // validar que cada logro del test no exista, para los que no existen no se hace nada y para los que
-  // si existen se le pushea
-  if (aprobado && test.logros.length > 0) {
-    const nuevosLogros = test.logros.filter(
-      (logro) => !user.logros.includes(logro._id)
+
+
+
+
+  // Si aprobó, crear logros del test que el usuario aún no tenga por nombre
+  let logrosCreados = [];
+  if (aprobado && Array.isArray(test.logros) && test.logros.length > 0) {
+    const nombresLogrosUsuario = new Set(
+      (user.logros || []).map((l) => (l && l.nombre ? l.nombre.toLowerCase() : ""))
     );
-    if (nuevosLogros.length === 0) {
-      return {
-        message: "El usuario ya tiene todos los logros de este test",
-       
-      };
-    } else {
-      user.logros.push(...nuevosLogros);
+
+    for (const logroTest of test.logros) {
+      const nombreLogro = logroTest && logroTest.nombre ? logroTest.nombre.trim() : "";
+      if (!nombreLogro) continue;
+
+      const yaTieneLogro = nombresLogrosUsuario.has(nombreLogro.toLowerCase());
+      if (!yaTieneLogro) {
+        const nuevoLogro = await Logros.create({
+          nombre: nombreLogro,
+          iconoUrl: logroTest.iconoUrl || undefined,
+          usuarioId: user._id,
+        });
+        user.logros.push(nuevoLogro._id);
+        nombresLogrosUsuario.add(nombreLogro.toLowerCase());
+        logrosCreados.push(nuevoLogro);
+      }
+    }
+
+    if (logrosCreados.length > 0) {
       await user.save();
     }
   }
@@ -55,7 +71,12 @@ exports.verificarTestService = async ({ userId, testId, respuestas }) => {
     preguntasCorrectas,
     preguntasIncorrectas,
     aprobado,
-    message: "Logros agregados con exito",
-    logrosOtorgados: test.logros,
+    message:
+      aprobado && logrosCreados.length > 0
+        ? "Logros creados y asignados con éxito"
+        : aprobado
+        ? "Sin nuevos logros para asignar"
+        : "Test no aprobado",
+    logrosOtorgados: logrosCreados,
   };
 };

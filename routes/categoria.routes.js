@@ -1,9 +1,8 @@
 const express = require("express");
 const categoriaRouter = express.Router();
 
-const {
-  createNewCategoriaController,
-} = require("../controllers/categoria/createNewCategoria.controller");
+const { authorizeRoles } = require("../middlewares/roles.middleware");
+const { createNewCategoriaController } = require("../controllers/categoria/createNewCategoria.controller");
 
 const {
   putOneCategoriaController,
@@ -26,12 +25,12 @@ categoriaRouter.get("/:id", getOneCategoriaController);
 categoriaRouter.get("/", getAllCategoriasController);
 
 // POST
-categoriaRouter.post("/", createNewCategoriaController);
+categoriaRouter.post("/", authorizeRoles('editor'), createNewCategoriaController);
 
 // PUT
-categoriaRouter.put("/:id", putOneCategoriaController);
+categoriaRouter.put("/:id", authorizeRoles('editor'), putOneCategoriaController);
 
 // DELETE
-categoriaRouter.delete("/:id", deleteOneCategoriaController);
+categoriaRouter.delete("/:id", authorizeRoles('editor'), deleteOneCategoriaController);
 
 module.exports = categoriaRouter;

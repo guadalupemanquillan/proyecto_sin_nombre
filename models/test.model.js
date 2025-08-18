@@ -20,9 +20,9 @@ const testSchema = new mongoose.Schema({
   ],
   logros: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Logros",
-    },
+      nombre: String,
+      iconoUrl: String,
+    }
   ],
   isDeleted: {
     type: Boolean,

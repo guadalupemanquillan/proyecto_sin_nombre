@@ -1,7 +1,8 @@
 const Logros = require("../../models/logros.model");
 const User = require("../../models/user.model");
 
-exports.createNewLogrosService = async (userId, nombre, iconoUrl) => {
+exports.createNewLogrosService = async (req) => {
+  const { userId, nombre, iconoUrl } = req.body || {};
   if (!userId || !nombre || !iconoUrl) {
     throw new Error("Faltan datos requeridos para crear el logro");
   }
@@ -11,11 +12,7 @@ exports.createNewLogrosService = async (userId, nombre, iconoUrl) => {
     throw new Error("Usuario no encontrado");
   }
 
-  const nuevoLogro = await Logros.create({
-    nombre,
-    userId: userId._id,
-    iconoUrl,
-  });
+  const nuevoLogro = await Logros.create({ nombre, usuarioId: userId, iconoUrl });
 
   if (!Array.isArray(user.logros)) {
     user.logros = [];
